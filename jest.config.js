@@ -7,5 +7,8 @@ module.exports = {
     collectCoverage: true,
     coverageDirectory: 'coverage',
     modulePathIgnorePatterns: ['dist'],
+    moduleNameMapper: {
+        '^@octokit/rest$': '<rootDir>/tests/__mocks__/@octokit/rest.ts',
+    }
   };
   
