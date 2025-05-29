@@ -12,7 +12,8 @@ A Node.js + TypeScript REST API to let Bolt.new users (including non-developers)
 - Structured error handling and centralized logging.
 - Configurable via environment variables with validation.
 - Linting, formatting, and Git hooks for consistent code quality.
-- Unit and integration tests for core functionality.
+- Comprehensive unit & integration tests for core functionality.
+- **Interactive Swagger UI** served at `/docs` for live API exploration.
 
 ## Table of Contents
 
@@ -20,6 +21,7 @@ A Node.js + TypeScript REST API to let Bolt.new users (including non-developers)
 - [Environment Variables](#environment-variables)
 - [Installation](#installation)
 - [Running the API](#running-the-api)
+- [API Documentation (Swagger UI)](#api-documentation-swagger-ui)
 - [API Reference](#api-reference)
 - [Project Structure](#project-structure)
 - [Testing](#testing)
@@ -30,7 +32,7 @@ A Node.js + TypeScript REST API to let Bolt.new users (including non-developers)
 
 These instructions will get a copy of the project up and running on your local machine for development and testing purposes.
 
-### Environment Variables
+## Environment Variables
 
 Rename `.env.example` to `.env` and fill in your values:
 
@@ -41,12 +43,12 @@ GITHUB_REPO_OWNER=your_github_username
 GITHUB_REPO_NAME=bolt.new
 ```
 
-### Installation
+## Installation
 
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/fredagbona/bolt-issue-api.git
+   git clone https://github.com/fredagbina/bolt-issue-api.git
    cd bolt-issue-api
    ```
 
@@ -62,7 +64,7 @@ GITHUB_REPO_NAME=bolt.new
    npm run prepare
    ```
 
-### Running the API
+## Running the API
 
 - **Development mode** (with live reload):
 
@@ -77,7 +79,9 @@ GITHUB_REPO_NAME=bolt.new
   npm start
   ```
 
-The API will be available at `http://localhost:3001/api`.
+## API Documentation (Swagger UI)
+
+After starting the server, visit `http://localhost:3001/docs` to access the interactive Swagger UI. Explore endpoints, view request/response schemas, and test operations directly from the browser.
 
 ## API Reference
 
@@ -97,12 +101,12 @@ Submit a new issue report. The request body must adhere to the following schema:
 
 ```bash
 curl -X POST http://localhost:3001/api/report \
-     -H "Content-Type: application/json" \
-     -d '{
-       "title": "Unable to run project",
-       "description": "I can\'t install dependencies",
-       "context": { "url": "https://bolt.new/project" }
-     }'
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Unable to run project",
+    "description": "I can\'t install dependencies",
+    "context": { "url": "https://bolt.new/project" }
+  }'
 ```
 
 #### Successful Response (201)
@@ -128,22 +132,22 @@ curl -X POST http://localhost:3001/api/report \
 ```
 bolt-issue-api/
 ├── src/
-│   ├── controllers/
-│   │   └── reportController.ts
-│   ├── routes/
-│   │   └── reportRoutes.ts
-│   ├── services/
-│   │   └── githubService.ts
+│   ├── controllers/reportController.ts
+│   ├── routes/reportRoutes.ts
+│   ├── services/githubService.ts
 │   ├── middleware/
 │   │   ├── errorHandler.ts
 │   │   └── validate.ts
-│   ├── config/
-│   │   └── index.ts
-│   ├── schemas/
-│   │   └── reportSchema.ts
-│   ├── utils/
-│   │   └── logger.ts
+│   ├── config/index.ts
+│   ├── schemas/reportSchema.ts
+│   ├── utils/logger.ts
 │   └── server.ts
+├── tests/
+│   ├── services/githubService.test.ts
+│   ├── routes/reportRoutes.test.ts
+│   ├── utils/logger.test.ts
+│   └── middleware/errorHandler.test.ts
+├── openapi.yaml
 ├── .env.example
 ├── .eslintrc.js
 ├── .prettierrc
@@ -158,40 +162,26 @@ bolt-issue-api/
 
 ### Unit Tests
 
-- Use **Jest** for unit testing core components, such as `GitHubService` and controllers.
-- Run:
-
+- Use **Jest** for unit testing core components:
   ```bash
   npm test
   ```
 
 ### Integration Tests
 
-- Use **Supertest** to test the Express routes end-to-end (mocking GitHub API calls where necessary).
+- Use **Supertest** to test the Express routes end-to-end (with GitHubService mocked).
 
-### Coverage
-
-A coverage report is generated after tests. Aim for at least **80% coverage** on critical files.
+Coverage reports are generated in `/coverage`.
 
 ## Code Quality
 
-- **ESLint** for linting. Run:
-
-  ```bash
-  npm run lint
-  ```
-
-- **Prettier** for formatting. Run:
-
-  ```bash
-  npm run format
-  ```
-
-- **Husky** + **lint-staged** automatically run these on staged changes.
+- **ESLint** for linting: `npm run lint`.
+- **Prettier** for formatting: `npm run format`.
+- **Husky** + **lint-staged** enforce checks on staged changes.
 
 ## Contributing
 
 1. Fork the repo.
-2. Create a feature branch: `git checkout -b feature/XYZ`.
-3. Commit your changes with clear messages.
-4. Open a Pull Request describing your changes.
+2. Create a feature branch: `git checkout -b feature/xyz`.
+3. Commit changes with clear messages.
+4. Open a Pull Request detailing your enhancements.
